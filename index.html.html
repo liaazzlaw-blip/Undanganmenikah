@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan Pernikahan | Putra & Marlini</title>
+
+    
+<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- GAYA GLOBAL --- */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden; 
+            font-family: Arial, sans-serif; /* Fallback font */
+            text-align: center;
+        }
+
+        /* --- HALAMAN COVER --- */
+        #coverPage {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            background-color: #fff;
+        }
+
+        /* Gaya untuk Embed Canva Cover */
+        .canva-embed-cover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .canva-embed-cover iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            overflow: hidden; 
+        }
+
+        /* Elemen di atas Canva Cover */
+        .overlay-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.5); 
+            color: white;
+            z-index: 10;
+        }
+        
+        /* Nama Tamu - Menggunakan font Dancing Script */
+        #namaTamu {
+            font-family: 'Dancing Script', cursive; 
+            font-size: 2em; /* DIKECILKAN dari 2.5em */
+            font-weight: 700; 
+            margin: 10px 0 30px 0;
+            padding: 5px 15px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3); 
+        }
+
+        /* Nama Pengantin - Menggunakan font Playfair Display */
+        .nama-pengantin {
+            font-family: 'Playfair Display', serif; 
+            font-size: 2.5em; /* DIKECILKAN dari 3.5em */
+            font-weight: 700; 
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.4); 
+        }
+        
+        /* Salam Pembuka - Menggunakan font Dancing Script */
+        .salam-pembuka {
+            font-family: 'Dancing Script', cursive; 
+            font-size: 1.2em; /* DIKECILKAN dari 1.5em */
+            margin-bottom: 5px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Tombol Buka Undangan */
+        #bukaUndanganBtn {
+            padding: 10px 25px; /* Sedikit dikecilkan */
+            font-size: 1em; /* Sedikit dikecilkan */
+            cursor: pointer;
+            background-color: #8B4513; 
+            color: white;
+            border: 2px solid white;
+            border-radius: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 30px;
+            transition: background-color 0.3s;
+        }
+        
+        #bukaUndanganBtn:hover {
+            background-color: #A0522D; 
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="backgroundMusic" loop muted>
+        <source src="musik_undangan.mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung elemen audio.
+    </audio>
+
+    <div id="coverPage">
+        
+        <div class="canva-embed-cover">
+            <iframe loading="lazy" src="https://www.canva.com/design/DAG3ax7m5Jo/R1lkirnpupHgnMsruQj7gQ/view?embed" allowfullscreen="true" allow="fullscreen"></iframe>
+        </div>
+        
+        <div class="overlay-content">
+            
+            <p class="salam-pembuka">Kepada Yth. Bapak/Ibu/Sdr/i:</p>
+            <p id="namaTamu">Tamu Undangan</p> 
+            <p class="salam-pembuka">Kami Mengundang Anda ke Pernikahan</p>
+            
+            <h1 class="nama-pengantin">Putra & Marlini</h1>
+            
+            <button id="bukaUndanganBtn">Buka Undangan</button>
+            
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const namaTamuEl = document.getElementById('namaTamu');
+            const bukaUndanganBtn = document.getElementById('bukaUndanganBtn');
+            const backgroundMusic = document.getElementById('backgroundMusic');
+            
+            // Link Publish Undangan Utama (Link yang harus dialihkan)
+            const MAIN_CANVA_URL = "https://undangannikahputradanmarlini.my.canva.site/";
+
+            // --- FUNGSI 1: MENGAMBIL NAMA TAMU DARI URL ---
+            const urlParams = new URLSearchParams(window.location.search);
+            let namaDariUrl = urlParams.get('to'); 
+
+            if (namaDariUrl) {
+                namaDariUrl = namaDariUrl.replace(/\+/g, ' ').replace(/%20/g, ' '); 
+                namaTamuEl.textContent = namaDariUrl;
+            }
+
+            // --- FUNGSI 2: TOMBOL BUKA UNDANGAN & PUTAR MUSIK (Redirect) ---
+            bukaUndanganBtn.addEventListener('click', () => {
+                
+                // 1. Putar Musik
+                backgroundMusic.muted = false; 
+                const playPromise = backgroundMusic.play();
+
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        console.log("Musik diputar");
+                    }).catch(error => {
+                        console.log("Autoplay diblokir.");
+                    });
+                }
+                
+                // 2. Arahkan pengguna ke website Canva Anda
+                window.location.href = MAIN_CANVA_URL; 
+            });
+        });
+    </script>
+</body>
+</html>
